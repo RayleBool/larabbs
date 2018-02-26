@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
 use Auth;
 
@@ -11,7 +10,6 @@ class UserRequest extends FormRequest
     {
         return true;
     }
-
     public function rules()
     {
         return [
@@ -21,7 +19,6 @@ class UserRequest extends FormRequest
             'avatar' => 'mimes:jpeg,bmp,png,gif|dimensions:min_width=200,min_height=200',
         ];
     }
-
     public function messages()
     {
         return [
