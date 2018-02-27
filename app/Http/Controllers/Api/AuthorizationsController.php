@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use Auth;
 use Illuminate\Http\Request;
-use App\Http\Requests\Api\AuthorizationRequest;
+use App\Http\Requests\Api\AuthorizationsRequest;
 use App\Http\Requests\Api\SocialAuthorizationRequest;
 use App\Models\User;
 
@@ -55,10 +56,11 @@ class AuthorizationsController extends Controller
                 break;
         }
 
-        return $this->response->array(['token' => $user->id]);
+        $token = Auth::guard('api')->fromUser($user);
+        return $this->respondWithToken($token)->setStatusCode(201);
     }
 
-    public function store(AuthorizationRequest $request)
+    public function store(AuthorizationsRequest $request)
     {
         $username = $request->username;
 
@@ -70,10 +72,28 @@ class AuthorizationsController extends Controller
             return $this->response->errorUnauthorized('用户名或密码错误');
         }
 
-        return $this->response->array([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'expires_in' => \Auth::guard('api')->factory()->getTTL() * 60,
-        ])->setStatusCode(201);
+        return $this->respondWithToken($token)->setStatusCode(201);
+     }
+
+     public function update()
+     {
+         $token = Auth::guard('api')->refresh();
+         return $this->respondWithToken($token);
+     }
+
+     protected function respondWithToken($token)
+     {
+         return $this->response->array([
+             'access_token' => $token,
+             'token_type' => 'Bearer',
+             'expires_in' => \Auth::guard('api')->factory()->getTTL() * 60,
+         ]);
+     }
+
+     public function destroy()
+     {
+         Auth::guard('api')->logout();
+
+         return $this->response->noContent();
      }
 }

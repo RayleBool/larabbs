@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Dingo\Api\Http\FormRequest;
 
 class AuthorizationsRequest extends FormRequest
 {
@@ -24,7 +24,7 @@ class AuthorizationsRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'username' => 'required|string',
             'password' => 'required|string|min:6',
         ];
     }
