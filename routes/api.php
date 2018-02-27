@@ -52,6 +52,10 @@ $api->version('v1', [
         'limit' => config('api.rate_limits.access.limit'),
         'expires' => config('api.rate_limits.access.expires'),
     ], function($api) {
+        //游客可以访问的接口
+        $api->get('categories', 'CategoriesController@index')
+        ->name('api.categories.index');
+
 
         //token 验证路由
         $api->group(['middleware' => 'api.auth'], function($api) {
@@ -60,7 +64,7 @@ $api->version('v1', [
             ->name('api.user.show');
 
             $api->patch('user', 'UsersController@update')
-            ->name('api.user.update');
+            ->name('api.user.updatez');
 
             $api->post('images', 'ImagesController@store')
             ->name('api.images.store');
