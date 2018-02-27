@@ -15,6 +15,9 @@ class CreateImagesTblae extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->idnex();
+            $table->enum('type', ['avatar', 'topic'])->index();
+            $table->string('path')->index();
             $table->timestamps();
         });
     }
