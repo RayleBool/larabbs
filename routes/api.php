@@ -56,6 +56,12 @@ $api->version('v1', [
         $api->get('categories', 'CategoriesController@index')
         ->name('api.categories.index');
 
+        $api->get('topics', 'TopicsController@index')
+        ->name('api.topics.index');
+
+        $api->get('users/{user}/topics', 'TopicsController@userIndex')
+        ->name('api.user.topics.index');
+
 
         //token 验证路由
         $api->group(['middleware' => 'api.auth'], function($api) {
