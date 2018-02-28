@@ -108,6 +108,10 @@ $api->version('v1', [
 
             $api->patch('user/read/notifications', 'NotificationsController@read')
             ->name('api.user.notifications.read');
+
+            $api->get('user/permissions', 'PermissionsController@index')
+            ->name('api.user.permissions.index');
+
         });
     });
 });
