@@ -102,6 +102,9 @@ $api->version('v1', [
 
             $api->get('user/notifications', 'NotificationsController@index')
             ->name('api.user.notification.index');
+
+            $api->get('user/notifications/stats', 'NotificationsController@stats')
+            ->name('api.user.notification.stats');
         });
     });
 });
