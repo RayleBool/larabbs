@@ -65,6 +65,12 @@ $api->version('v1', [
         $api->get('users/{user}/topics', 'TopicsController@userIndex')
         ->name('api.user.topics.index');
 
+        $api->get('topics/{topic}/replies', 'RepliesController@index')
+        ->name('api.topics.replies.index');
+
+        $api->get('users/{user}/replies', 'RepliesController@userIndex')
+        ->name('api.users.replies.index');
+
 
         //token 验证路由
         $api->group(['middleware' => 'api.auth'], function($api) {
